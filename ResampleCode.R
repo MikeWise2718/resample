@@ -2,12 +2,9 @@ library(ggplot2)
 library(grid)
 library(gridExtra)
 #
-# Data prep script for CBRE HQ Hot/Cold call data
-#  Mike Wise 11-Nov-2016
+# Resample Project
+#  Mike Wise 15-Nov-2016
 #
-#setwd("./VAV 10")
-#flst <- list.files()
-#sprintf("c('%s')",paste0(flst,collapse="','"))
 
 set.seed(1234)
 options(warn = 2) # warnings are errors
