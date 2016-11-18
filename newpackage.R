@@ -1,5 +1,5 @@
 library(utils)
-require(reaferg)
+require(resample)
 detach(package:resample)
 remove.packages(c("resample"))
 

@@ -1,4 +1,4 @@
-plotCols <- function(rm,dcolor=NULL,trim=T) {
+plotCols <- function(rm, dcolor = NULL, trim = T, alf = 0.3, mcol = "red", lcol = "blue", tickdf = NULL) {
   rdf <- rm$rdf
   urdat <- rm$urdat
   titles <- rm$titles
@@ -15,13 +15,20 @@ plotCols <- function(rm,dcolor=NULL,trim=T) {
     gp <- ggplot(rrdf) + geom_line(aes(x = tn, y = ppv, color = colr), show.legend = T) +
                       labs(title = titles[[i]], x = "", y = "")
     if (nrow(udf) > 0) {
-      gp <- gp + geom_point(data = udf, aes(x = dt, y = cname, color = "Measured"), alpha = 0.4, show.legend = T)
+      gp <- gp + geom_point(data = udf, aes(x = dt, y = cname, color = "Measured"), alpha = alf, show.legend = T)
+    }
+    if (!is.null(tickdf)) {
+      for (j in 1:nrow(tickdf)) {
+        xval <- as.numeric(tickdf$dt[[j]])
+        clr <- ifelse(tickdf$HotCold[[j]] == "C", "darkblue", "darkred")
+        gp <- gp + geom_vline(xintercept = xval, color = clr)
+      }
     }
     if (is.null(dcolor)) {
-      vals <- c("Measured" = "red")
-      vals[[pv]] <- "blue"
+      vals <- c("Measured" = mcol)
+      vals[[pv]] <- lcol
     } else {
-      vals <- c(dcolor, "Measured" = "red")
+      vals <- c(dcolor, "Measured" = mcol)
     }
     gp <- gp + scale_color_manual(name = "", values = vals)
     # gp <- gp + theme(axis.text.x=element_text(angle=30,hjust=1))
